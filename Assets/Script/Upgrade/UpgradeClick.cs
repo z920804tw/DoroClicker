@@ -3,18 +3,20 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-
-public class Upgrade : MonoBehaviour
+public class UpgradeClick : MonoBehaviour
 {
     [Header("物件參考")]
     public TMP_Text incomeText;
     public TMP_Text priceText;
+    public TMP_Text itemNameText;
     public GameObject blockUI;
     Button current;
     [Header("數值設定")]
-    [SerializeField] int startPrice = 10;
-    public float upgradePriceMutiplier;
-    public float upgradePerTime = 0.2f;
+    public UpgradeSO upgradeSO;
+    [SerializeField] Image itemImg;
+    int startPrice;
+    float upgradePriceMutiplier;
+    float upgradePerTime;
     GameManager gameManager;
     int currentCount = 0;
 
@@ -23,22 +25,22 @@ public class Upgrade : MonoBehaviour
     {
         current = GetComponent<Button>();
         gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
+
+        itemNameText.text = upgradeSO.itemName;
+        itemImg.sprite = upgradeSO.itemImg;
+        startPrice = upgradeSO.startPrice;
+        upgradePriceMutiplier = upgradeSO.upgradePriceMutiplier;
+        upgradePerTime = upgradeSO.upgradePerTime;
+
         UpdateUI();
     }
 
     // Update is called once per frame
     void Update()
     {
-        // if (gameManager.CanBuy(CaculatePrice())) //可以購買的話
-        // {
-        //     current.interactable = true;
-        //     blockUI.SetActive(false);
-        // }
-        // else
-        // {
-        //     current.interactable = false;
-        //     blockUI.SetActive(true);
-        // }
+        bool canBuy = gameManager.CoinCount >= CaculatePrice();
+        current.interactable = canBuy;
+        blockUI.SetActive(!canBuy);
     }
 
 
@@ -48,33 +50,25 @@ public class Upgrade : MonoBehaviour
 
         if (canBuy)
         {
-            float prevIncome= CaculateIncomePerSecond();
-
             currentCount++;
             UpdateUI();
-
-            gameManager.idlePerSecondCount-=prevIncome;
-            gameManager.idlePerSecondCount+=CaculateIncomePerSecond();
-            gameManager.UpdateUI();
+            gameManager.oneClickCount = CaculateIncomePerSecond();//增加升級後的值
         }
-
     }
 
     public void UpdateUI()
     {
-        priceText.text = $"{CaculatePrice()}";
-        incomeText.text = $"x{currentCount} {CaculateIncomePerSecond()}/s";
+        priceText.text = $"{gameManager.NumberConvert(CaculatePrice())}"; //價錢
+        incomeText.text = $"x{currentCount} {gameManager.NumberConvert(CaculateIncomePerSecond())}/s"; //數量和每秒產出量
     }
-    int CaculatePrice()
+    int CaculatePrice() //計算購買價格
     {
         int price = Mathf.RoundToInt(startPrice * Mathf.Pow(upgradePriceMutiplier, currentCount));
         return price;
     }
 
-    float CaculateIncomePerSecond()
+    float CaculateIncomePerSecond() //計算每秒產出
     {
-        float income= currentCount* Mathf.Pow(1.2f,upgradePerTime);
-
         return currentCount * upgradePerTime;
     }
 }

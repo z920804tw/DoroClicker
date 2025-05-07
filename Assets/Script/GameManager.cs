@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -14,11 +15,13 @@ public class GameManager : MonoBehaviour
     [Header("變數設定")]
 
     public float oneClickCount = 1;
-    public float idlePerSecondCount=0;
+    public float idlePerSecondCount = 0; //每秒自動數量增加
+    [SerializeField] float clickPerSecondCount = 0;//每秒點擊增加
     float coinCount = 0;
     public float CoinCount { get { return coinCount; } set { coinCount = value; } }
-
     float timer;
+
+
 
 
 
@@ -32,38 +35,61 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         IdlePerSecondIncome();
+        UpdateUI();
     }
 
-    public void IdlePerSecondIncome()
+    void IdlePerSecondIncome()
     {
         timer += Time.deltaTime;
         if (timer >= 1)
         {
-            timer=0;
-            coinCount+=idlePerSecondCount;
-            UpdateUI();
+            timer = 0;
+            coinCount += idlePerSecondCount;
         }
     }
 
-    public void ClickAction()
+    public void ClickAction() //點擊中央按鈕時執行
     {
         coinCount += oneClickCount;
+        clickPerSecondCount = oneClickCount;
+        // clicked = true;
         UpdateUI();
     }
-    public void UpdateUI()
+    public void UpdateUI()  //更新上方UI文字
     {
-        coinCountText.text = $"{coinCount}";
-        incomeText.text=$"{idlePerSecondCount}/s";
+        coinCountText.text = $"{NumberConvert(coinCount)}";
+        incomeText.text = $"{NumberConvert(idlePerSecondCount)}/s";
     }
 
-    public bool CanBuy(int price)
+    public bool CanBuy(int price) //是否能購買的功能
     {
         if (coinCount >= price)
         {
             coinCount -= price;
-            UpdateUI();
             return true;
         }
         else return false;
+    }
+
+
+    public string NumberConvert(float number)
+    {
+        string[] unit = { "", "K", "M", "B", "T" };
+        int index = 0;
+        while (number >= 1000 && index < unit.Length - 1) //有超過該單位的容量上限時，就會轉換 (每個單位最高為999)
+        {
+            number = number / 1000;
+            index++;
+
+            //例如 number=2900 更新後 number=2.9 ，index=1   
+        }
+        if (index == 0)
+        {
+            return $"{number}{unit[index]}";
+        }
+        else
+        {
+            return $"{number:0.00}{unit[index]}";
+        }
     }
 }
