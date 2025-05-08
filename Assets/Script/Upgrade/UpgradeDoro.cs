@@ -47,8 +47,6 @@ public class UpgradeDoro : MonoBehaviour
 
         if (canBuy)
         {
-
-
             float prevIncome = CaculateIncomePerSecond();
             currentCount++;
             UpdateUI();
@@ -58,9 +56,9 @@ public class UpgradeDoro : MonoBehaviour
 
             if (!unlocked)  //第一次購買後解鎖圖片與文字
             {
-                unlocked=true;
-                itemImg.color=Color.white;
-                itemNameText.text=upgradeSO.itemName;
+                unlocked = true;
+                itemImg.color = Color.white;
+                itemNameText.text = upgradeSO.itemName;
             }
         }
     }
@@ -76,7 +74,7 @@ public class UpgradeDoro : MonoBehaviour
         return price;
     }
 
-    float CaculateIncomePerSecond() //計算每秒產出
+    public float CaculateIncomePerSecond() //計算每秒產出
     {
         return currentCount * upgradePerTime;
     }

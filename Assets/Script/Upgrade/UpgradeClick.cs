@@ -59,7 +59,7 @@ public class UpgradeClick : MonoBehaviour
     public void UpdateUI()
     {
         priceText.text = $"{gameManager.NumberConvert(CaculatePrice())}"; //價錢
-        incomeText.text = $"x{currentCount} {gameManager.NumberConvert(CaculateIncomePerSecond())}/s"; //數量和每秒產出量
+        incomeText.text = $"x{currentCount} {gameManager.NumberConvert(CaculateIncomePerSecond())}/OneClick"; //數量和每秒產出量
     }
     int CaculatePrice() //計算購買價格
     {

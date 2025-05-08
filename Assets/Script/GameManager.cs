@@ -21,6 +21,8 @@ public class GameManager : MonoBehaviour
     public float CoinCount { get { return coinCount; } set { coinCount = value; } }
     float timer;
 
+    Coroutine clickCoroutine;
+
 
 
 
@@ -34,6 +36,8 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+
         IdlePerSecondIncome();
         UpdateUI();
     }
@@ -51,15 +55,21 @@ public class GameManager : MonoBehaviour
     public void ClickAction() //點擊中央按鈕時執行
     {
         coinCount += oneClickCount;
-        clickPerSecondCount = oneClickCount;
-        // clicked = true;
+        if (clickCoroutine != null)
+        {
+            StopCoroutine(clickCoroutine);
+        }
+        clickCoroutine = StartCoroutine(clickCountReset());
+
         UpdateUI();
     }
     public void UpdateUI()  //更新上方UI文字
     {
         coinCountText.text = $"{NumberConvert(coinCount)}";
-        incomeText.text = $"{NumberConvert(idlePerSecondCount)}/s";
+        incomeText.text = $"{NumberConvert(idlePerSecondCount + clickPerSecondCount)}/s";
     }
+
+
 
     public bool CanBuy(int price) //是否能購買的功能
     {
@@ -91,5 +101,12 @@ public class GameManager : MonoBehaviour
         {
             return $"{number:0.00}{unit[index]}";
         }
+    }
+
+    IEnumerator clickCountReset() //如果沒有被按下後0.5秒會被清空
+    {
+        yield return new WaitForSeconds(0.5f);
+        clickPerSecondCount = 0;
+        clickCoroutine = null;
     }
 }

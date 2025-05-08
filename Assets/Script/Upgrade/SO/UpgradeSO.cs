@@ -8,4 +8,5 @@ public class UpgradeSO : ScriptableObject
     public int startPrice;
     public float upgradePriceMutiplier;
     public float upgradePerTime;
+
 }
