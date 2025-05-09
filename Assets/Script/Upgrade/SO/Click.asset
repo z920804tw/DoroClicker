@@ -16,4 +16,5 @@ MonoBehaviour:
   itemName: Click
   startPrice: 100
   upgradePriceMutiplier: 1.15
+  upgradePerCountMutiplier: 1.1
   upgradePerTime: 2

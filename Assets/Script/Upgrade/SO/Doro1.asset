@@ -16,4 +16,5 @@ MonoBehaviour:
   itemName: Bear
   startPrice: 100
   upgradePriceMutiplier: 1.15
+  upgradePerCountMutiplier: 1.2
   upgradePerTime: 5

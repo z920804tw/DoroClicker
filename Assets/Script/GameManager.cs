@@ -2,12 +2,15 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
     [Header("物件參考")]
     public GameObject mainObject;
+    public GameObject clickTextPrefab;
+    [SerializeField] Transform parent;
     [Header("UI參考")]
     public TMP_Text coinCountText;
     public TMP_Text incomeText;
@@ -21,11 +24,6 @@ public class GameManager : MonoBehaviour
     public float CoinCount { get { return coinCount; } set { coinCount = value; } }
     float timer;
 
-    Coroutine clickCoroutine;
-
-
-
-
 
     // Start is called before the first frame update
     void Start()
@@ -36,13 +34,11 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-
         IdlePerSecondIncome();
         UpdateUI();
     }
 
-    void IdlePerSecondIncome()
+    void IdlePerSecondIncome() //每秒自動增加
     {
         timer += Time.deltaTime;
         if (timer >= 1)
@@ -55,11 +51,10 @@ public class GameManager : MonoBehaviour
     public void ClickAction() //點擊中央按鈕時執行
     {
         coinCount += oneClickCount;
-        if (clickCoroutine != null)
-        {
-            StopCoroutine(clickCoroutine);
-        }
-        clickCoroutine = StartCoroutine(clickCountReset());
+
+        GameObject clickText=Instantiate(clickTextPrefab,Input.mousePosition,Quaternion.identity);
+        clickText.transform.SetParent(parent);
+        clickText.GetComponentInChildren<TMP_Text>().text=$"{NumberConvert(oneClickCount)}";
 
         UpdateUI();
     }
@@ -101,12 +96,5 @@ public class GameManager : MonoBehaviour
         {
             return $"{number:0.00}{unit[index]}";
         }
-    }
-
-    IEnumerator clickCountReset() //如果沒有被按下後0.5秒會被清空
-    {
-        yield return new WaitForSeconds(0.5f);
-        clickPerSecondCount = 0;
-        clickCoroutine = null;
     }
 }

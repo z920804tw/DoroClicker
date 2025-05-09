@@ -7,6 +7,7 @@ public class UpgradeSO : ScriptableObject
     public string itemName;
     public int startPrice;
     public float upgradePriceMutiplier;
+    public float upgradePerCountMutiplier;
     public float upgradePerTime;
 
 }

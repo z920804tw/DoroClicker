@@ -16,6 +16,7 @@ public class UpgradeClick : MonoBehaviour
     [SerializeField] Image itemImg;
     int startPrice;
     float upgradePriceMutiplier;
+    float upgradePerCountMutiplier;
     float upgradePerTime;
     GameManager gameManager;
     int currentCount = 0;
@@ -26,11 +27,7 @@ public class UpgradeClick : MonoBehaviour
         current = GetComponent<Button>();
         gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
 
-        itemNameText.text = upgradeSO.itemName;
-        itemImg.sprite = upgradeSO.itemImg;
-        startPrice = upgradeSO.startPrice;
-        upgradePriceMutiplier = upgradeSO.upgradePriceMutiplier;
-        upgradePerTime = upgradeSO.upgradePerTime;
+        InitializationInfo();
 
         UpdateUI();
     }
@@ -69,6 +66,20 @@ public class UpgradeClick : MonoBehaviour
 
     float CaculateIncomePerSecond() //計算每秒產出
     {
-        return currentCount * upgradePerTime;
+        if (currentCount == 0)
+            return 0;
+            
+        float count = Mathf.Round(upgradePerTime * Mathf.Pow(upgradePerCountMutiplier, currentCount));
+        return count;
+    }
+
+    void InitializationInfo()
+    {
+        itemNameText.text = upgradeSO.itemName;
+        itemImg.sprite = upgradeSO.itemImg;
+        startPrice = upgradeSO.startPrice;
+        upgradePriceMutiplier = upgradeSO.upgradePriceMutiplier;
+        upgradePerCountMutiplier = upgradeSO.upgradePerCountMutiplier;
+        upgradePerTime = upgradeSO.upgradePerTime;
     }
 }

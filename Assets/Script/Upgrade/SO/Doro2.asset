@@ -16,4 +16,5 @@ MonoBehaviour:
   itemName: Rabbit
   startPrice: 500
   upgradePriceMutiplier: 1.15
+  upgradePerCountMutiplier: 1.2
   upgradePerTime: 15

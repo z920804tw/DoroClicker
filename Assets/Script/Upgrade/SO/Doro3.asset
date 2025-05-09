@@ -16,4 +16,5 @@ MonoBehaviour:
   itemName: Deer
   startPrice: 1000
   upgradePriceMutiplier: 1.15
+  upgradePerCountMutiplier: 1.2
   upgradePerTime: 20

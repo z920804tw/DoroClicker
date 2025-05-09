@@ -16,4 +16,5 @@ MonoBehaviour:
   itemName: Goat
   startPrice: 5000
   upgradePriceMutiplier: 1.15
+  upgradePerCountMutiplier: 1.2
   upgradePerTime: 40

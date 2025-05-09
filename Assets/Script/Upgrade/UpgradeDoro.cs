@@ -16,7 +16,8 @@ public class UpgradeDoro : MonoBehaviour
     public UpgradeSO upgradeSO;
     [SerializeField] Image itemImg;
     float startPrice;    //開始價錢
-    float upgradePriceMutiplier;
+    float upgradePriceMutiplier; //價格倍率
+    float upgradePerCountMutiplier; //生產倍率
     float upgradePerTime;
     int currentCount = 0;
     bool unlocked;
@@ -51,7 +52,12 @@ public class UpgradeDoro : MonoBehaviour
             currentCount++;
             UpdateUI();
 
-            gameManager.idlePerSecondCount -= prevIncome; //扣除原先的值    
+            Debug.Log(prevIncome);
+
+            if (gameManager.idlePerSecondCount > 0)
+            {
+                gameManager.idlePerSecondCount -= prevIncome; //扣除原先的值    
+            }
             gameManager.idlePerSecondCount += CaculateIncomePerSecond();//增加升級後的值
 
             if (!unlocked)  //第一次購買後解鎖圖片與文字
@@ -74,9 +80,13 @@ public class UpgradeDoro : MonoBehaviour
         return price;
     }
 
-    public float CaculateIncomePerSecond() //計算每秒產出
+    float CaculateIncomePerSecond() //計算每秒產出
     {
-        return currentCount * upgradePerTime;
+        if (currentCount == 0)
+        return 0;
+
+        float count = Mathf.Round(upgradePerTime * Mathf.Pow(upgradePerCountMutiplier, currentCount));
+        return count;
     }
 
 
@@ -87,6 +97,7 @@ public class UpgradeDoro : MonoBehaviour
         itemImg.sprite = upgradeSO.itemImg;
         startPrice = upgradeSO.startPrice;
         upgradePriceMutiplier = upgradeSO.upgradePriceMutiplier;
+        upgradePerCountMutiplier = upgradeSO.upgradePerCountMutiplier;
         upgradePerTime = upgradeSO.upgradePerTime;
         unlocked = false;
 
