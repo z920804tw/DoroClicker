@@ -8,8 +8,8 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     [Header("物件參考")]
-    public GameObject mainObject;
     public GameObject clickTextPrefab;
+    public GameObject clickSound;
     [SerializeField] Transform parent;
     [Header("UI參考")]
     public TMP_Text coinCountText;
@@ -19,10 +19,17 @@ public class GameManager : MonoBehaviour
 
     public float oneClickCount = 1;
     public float idlePerSecondCount = 0; //每秒自動數量增加
-    [SerializeField] float clickPerSecondCount = 0;//每秒點擊增加
     float coinCount = 0;
     public float CoinCount { get { return coinCount; } set { coinCount = value; } }
     float timer;
+
+    //每秒點擊設定
+    float clickCount;
+    [SerializeField] float clickPerSecondCount = 0;//每秒點擊增加
+    float coldDown;
+
+    Coroutine reset;
+    bool clicked;
 
 
     // Start is called before the first frame update
@@ -34,6 +41,17 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (clicked)
+        {
+            coldDown += Time.deltaTime;
+            if (coldDown >= 1)
+            {
+                coldDown = 0;
+                clickPerSecondCount = clickCount;
+                clickCount = 0;
+            }
+        }
+
         IdlePerSecondIncome();
         UpdateUI();
     }
@@ -47,21 +65,33 @@ public class GameManager : MonoBehaviour
             coinCount += idlePerSecondCount;
         }
     }
-
     public void ClickAction() //點擊中央按鈕時執行
     {
         coinCount += oneClickCount;
+        //撥點擊聲音
+        clickSound.GetComponent<AudioSource>().PlayOneShot(clickSound.GetComponent<AudioSource>().clip);
 
-        GameObject clickText=Instantiate(clickTextPrefab,Input.mousePosition,Quaternion.identity);
+        //計算每秒點及次數
+        clickCount++;
+        clicked = true;
+
+        if (reset != null)
+        {
+            StopCoroutine(reset);
+        }
+        reset = StartCoroutine(ResetClick());
+
+        //產生點擊生產數值
+        GameObject clickText = Instantiate(clickTextPrefab, Input.mousePosition, Quaternion.identity);
         clickText.transform.SetParent(parent);
-        clickText.GetComponentInChildren<TMP_Text>().text=$"{NumberConvert(oneClickCount)}";
+        clickText.GetComponentInChildren<TMP_Text>().text = $"{NumberConvert(oneClickCount)}";
 
         UpdateUI();
     }
     public void UpdateUI()  //更新上方UI文字
     {
         coinCountText.text = $"{NumberConvert(coinCount)}";
-        incomeText.text = $"{NumberConvert(idlePerSecondCount + clickPerSecondCount)}/s";
+        incomeText.text = $"{NumberConvert(idlePerSecondCount + (clickPerSecondCount * oneClickCount))}/s";
     }
 
 
@@ -96,5 +126,18 @@ public class GameManager : MonoBehaviour
         {
             return $"{number:0.00}{unit[index]}";
         }
+    }
+
+    IEnumerator ResetClick()
+    {
+        yield return new WaitForSeconds(1f);
+        clicked = false;
+        clickCount = 0;
+        clickPerSecondCount = 0;
+    }
+
+    public void ExitGame()
+    {
+        Application.Quit();
     }
 }
