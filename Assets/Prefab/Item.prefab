@@ -504,8 +504,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3119173649260645231}
-  - component: {fileID: 6995071142153481229}
   - component: {fileID: 699554338409154908}
+  - component: {fileID: 8674609350284435661}
   m_Layer: 5
   m_Name: Item
   m_TagString: Untagged
@@ -539,24 +539,6 @@ RectTransform:
   m_AnchoredPosition: {x: 241.5, y: -105}
   m_SizeDelta: {x: 400, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &6995071142153481229
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5550718159299370031}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d11177a5f9536344ebd0c2882baddbf7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  incomeText: {fileID: 7930695335371543445}
-  priceText: {fileID: 5052412175814971352}
-  itemNameText: {fileID: 2393694696804059259}
-  blockUI: {fileID: 3699246342400716768}
-  upgradeSO: {fileID: 11400000, guid: 5b998e357eaf9594e95f640ba4137898, type: 2}
-  itemImg: {fileID: 9022392623825219410}
 --- !u!114 &699554338409154908
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -601,8 +583,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 6995071142153481229}
-        m_TargetAssemblyTypeName: UpgradeOther, Assembly-CSharp
+      - m_Target: {fileID: 8674609350284435661}
+        m_TargetAssemblyTypeName: Upgrade, Assembly-CSharp
         m_MethodName: BuyUpgrade
         m_Mode: 1
         m_Arguments:
@@ -613,6 +595,24 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &8674609350284435661
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5550718159299370031}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e66bde0e3ffaf3448eb8a0ed150f476, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  incomeText: {fileID: 7930695335371543445}
+  priceText: {fileID: 5052412175814971352}
+  itemNameText: {fileID: 2393694696804059259}
+  itemImg: {fileID: 9022392623825219410}
+  blockUI: {fileID: 3699246342400716768}
+  upgradeSO: {fileID: 11400000, guid: 5f47f1ae358a36846b682543ba8203bf, type: 2}
 --- !u!1 &5698919927002736230
 GameObject:
   m_ObjectHideFlags: 0

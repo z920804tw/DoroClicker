@@ -1,7 +1,8 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-[CreateAssetMenu(menuName = "Upgrade/UpgradeInfo")]
-public class UpgradeSO : ScriptableObject
+
+public abstract class UpgradeSO : ScriptableObject
 {
     public Sprite itemImg;
     public string itemName;
@@ -9,5 +10,5 @@ public class UpgradeSO : ScriptableObject
     public float upgradePriceMutiplier;
     public float upgradePerCountMutiplier;
     public float upgradePerTime;
-
+    public abstract void BuyUpgrade(Upgrade upgrade);
 }

@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     public GameObject clickTextPrefab;
     public GameObject clickSound;
     [SerializeField] Transform parent;
+    public Upgrade[] upgrades;
     [Header("UI參考")]
     public TMP_Text coinCountText;
     public TMP_Text incomeText;
@@ -30,11 +31,15 @@ public class GameManager : MonoBehaviour
 
     Coroutine reset;
     bool clicked;
-
-
+    void Awake()
+    {
+    
+    }
     // Start is called before the first frame update
     void Start()
     {
+
+
         UpdateUI();
     }
 
@@ -128,6 +133,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
+
     IEnumerator ResetClick()
     {
         yield return new WaitForSeconds(1f);
@@ -140,4 +146,5 @@ public class GameManager : MonoBehaviour
     {
         Application.Quit();
     }
+    
 }

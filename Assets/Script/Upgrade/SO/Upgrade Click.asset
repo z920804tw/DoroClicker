@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 42cae607162b1cd41a1bfb4e2d71f974, type: 3}
-  m_Name: Click
+  m_Script: {fileID: 11500000, guid: 5594c9dcc0ccfd540af8b825e88de89d, type: 3}
+  m_Name: Upgrade Click
   m_EditorClassIdentifier: 
   itemImg: {fileID: 21300000, guid: dd0cb236cd91e8442bcf7b5ae4c8152a, type: 3}
   itemName: Click

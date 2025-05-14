@@ -3,23 +3,24 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-public class UpgradeDoro : MonoBehaviour
+public class Upgrade : MonoBehaviour
 {
     [Header("物件參考")]
     public TMP_Text incomeText;
     public TMP_Text priceText;
     public TMP_Text itemNameText;
+    [SerializeField] Image itemImg;
     public GameObject blockUI;
     Button current;
     [Header("數值設定")]
-
     public UpgradeSO upgradeSO;
-    [SerializeField] Image itemImg;
     float startPrice;    //開始價錢
+    float prevIncome;
+    public float PrevIncome { get { return prevIncome; } }
     float upgradePriceMutiplier; //價格倍率
     float upgradePerCountMutiplier; //生產倍率
     float upgradePerTime;
-    int currentCount = 0;
+    public int currentCount = 0;  //需要紀錄
     bool unlocked;
     GameManager gameManager;
 
@@ -28,8 +29,9 @@ public class UpgradeDoro : MonoBehaviour
     {
         current = GetComponent<Button>();
         gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
-        InitializationInfo();
 
+
+        InitializationInfo();
         UpdateUI();
     }
 
@@ -48,17 +50,11 @@ public class UpgradeDoro : MonoBehaviour
 
         if (canBuy)
         {
-            float prevIncome = CaculateIncomePerSecond();
-            currentCount++;
-            UpdateUI();
+            prevIncome = CaculateIncomePerSecond(); //先更新原本的價格
+            currentCount++; //增加數量
+            UpdateUI(); //更新UI
 
-            Debug.Log(prevIncome);
-
-            if (gameManager.idlePerSecondCount > 0)
-            {
-                gameManager.idlePerSecondCount -= prevIncome; //扣除原先的值    
-            }
-            gameManager.idlePerSecondCount += CaculateIncomePerSecond();//增加升級後的值
+            upgradeSO.BuyUpgrade(this); //購買
 
             if (!unlocked)  //第一次購買後解鎖圖片與文字
             {
@@ -80,17 +76,24 @@ public class UpgradeDoro : MonoBehaviour
         return price;
     }
 
-    float CaculateIncomePerSecond() //計算每秒產出
+    public float CaculateIncomePerSecond() //計算每秒產出
     {
         if (currentCount == 0)
-        return 0;
+            return 0;
 
         float count = Mathf.Round(upgradePerTime * Mathf.Pow(upgradePerCountMutiplier, currentCount));
         return count;
     }
 
+    public void Reset()
+    {
+        unlocked = false;
+        itemImg.color = Color.black;
+        itemNameText.text = "????";
+        priceText.text = $"0";
+        incomeText.text = $"x0 0/s"; //數量和每秒產出量
 
-
+    }
     void InitializationInfo()
     {
         itemNameText.text = upgradeSO.itemName;
@@ -102,8 +105,18 @@ public class UpgradeDoro : MonoBehaviour
         unlocked = false;
 
 
-        //預設沒有購買狀態
-        itemImg.color = Color.black;
-        itemNameText.text = "????";
+        //檢查是否有沒有購買過(適用於有存檔時)
+        if (currentCount > 0)
+        {
+            unlocked = true;
+            itemImg.color = Color.white;
+            itemNameText.text = upgradeSO.itemName;
+        }
+        else
+        {
+            itemImg.color = Color.black;
+            itemNameText.text = "????";
+        }
+
     }
 }
