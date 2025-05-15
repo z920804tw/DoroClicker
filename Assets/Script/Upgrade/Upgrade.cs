@@ -11,6 +11,7 @@ public class Upgrade : MonoBehaviour
     public TMP_Text itemNameText;
     [SerializeField] Image itemImg;
     public GameObject blockUI;
+    GameManager gameManager;
     Button current;
     [Header("數值設定")]
     public UpgradeSO upgradeSO;
@@ -22,7 +23,8 @@ public class Upgrade : MonoBehaviour
     float upgradePerTime;
     public int currentCount = 0;  //需要紀錄
     bool unlocked;
-    GameManager gameManager;
+
+
 
     // Start is called before the first frame update
     void Start()
@@ -87,10 +89,13 @@ public class Upgrade : MonoBehaviour
 
     public void Reset()
     {
+        GameManager gm = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
         unlocked = false;
         itemImg.color = Color.black;
         itemNameText.text = "????";
-        priceText.text = $"0";
+
+        priceText.text = $"{gm.NumberConvert(upgradeSO.startPrice)}";
+
         incomeText.text = $"x0 0/s"; //數量和每秒產出量
 
     }

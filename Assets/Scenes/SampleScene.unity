@@ -279,6 +279,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 968863a4cead1fe458440604f04636d2,
         type: 2}
+    - target: {fileID: 1987332423024095689, guid: 2a8df468c6fbfa344a961b4463069654,
+        type: 3}
+      propertyPath: gameManager
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 3628234473627165286, guid: 2a8df468c6fbfa344a961b4463069654,
         type: 3}
       propertyPath: m_Name
@@ -8732,6 +8737,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: cd12457108b46bc4bbab781f5acf9dcb,
         type: 2}
+    - target: {fileID: 1987332423024095689, guid: 2a8df468c6fbfa344a961b4463069654,
+        type: 3}
+      propertyPath: gameManager
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 3628234473627165286, guid: 2a8df468c6fbfa344a961b4463069654,
         type: 3}
       propertyPath: m_Name
@@ -9931,6 +9941,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 5e14898b245f35746aea182e3c15058a,
         type: 2}
+    - target: {fileID: 1987332423024095689, guid: 2a8df468c6fbfa344a961b4463069654,
+        type: 3}
+      propertyPath: gameManager
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 3628234473627165286, guid: 2a8df468c6fbfa344a961b4463069654,
         type: 3}
       propertyPath: m_Name
@@ -15326,6 +15341,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1327595460}
     m_Modifications:
+    - target: {fileID: 1987332423024095689, guid: 2a8df468c6fbfa344a961b4463069654,
+        type: 3}
+      propertyPath: gameManager
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 3628234473627165286, guid: 2a8df468c6fbfa344a961b4463069654,
         type: 3}
       propertyPath: m_Name
@@ -15548,6 +15568,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Item
+      objectReference: {fileID: 0}
+    - target: {fileID: 5550718159299370031, guid: 3152f8b183c55634198f7bc34ca9679a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

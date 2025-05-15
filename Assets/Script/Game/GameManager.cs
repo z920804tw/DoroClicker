@@ -31,15 +31,10 @@ public class GameManager : MonoBehaviour
 
     Coroutine reset;
     bool clicked;
-    void Awake()
-    {
     
-    }
     // Start is called before the first frame update
     void Start()
     {
-
-
         UpdateUI();
     }
 
